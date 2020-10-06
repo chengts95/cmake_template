@@ -1,7 +1,6 @@
 #pragma once
 #include "common.h"
-struct RLBranch 
+struct RLBranch
 {
-	Real R = 0,L=0;
-	
+	Real R = 0, L = 0;
 };

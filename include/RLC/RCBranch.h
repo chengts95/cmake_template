@@ -8,4 +8,3 @@ struct RCBranch
 	// Real Il_his = 0;
 	// Real Il = 0;
 };
-

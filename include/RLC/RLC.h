@@ -1,11 +1,12 @@
 #pragma once
 #include "common.h"
 
-struct Resistor{
+struct Resistor
+{
 	Real R = 0;
 };
 
-struct Capacitor 
+struct Capacitor
 {
 	Real C = 0;
 };
@@ -14,9 +15,7 @@ struct Inductor
 	Real L = 0;
 };
 
-
-struct EqAdmittance{
-    Real Geq;
+struct EqAdmittance
+{
+	Real Geq;
 };
-
-
