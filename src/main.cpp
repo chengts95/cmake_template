@@ -1,6 +1,7 @@
 #include <stdio.h>
 #include <RLC.h>
 #include <matplotlib.hpp>
+namespace plt = matplotlibcpp;
 void swap(int & a, int & b)
 {
     int temp;
@@ -12,24 +13,12 @@ void swap(int & a, int & b)
 int main(int argc, char const *argv[])
 {
     RLCBranch rlc;
-    
-    int a; 
-    int b;
-    a = 1; //0x00-0x03
-    b = 10;
-    rlc.R=1;
-    rlc.L=3;
-    rlc.C=10;
-    RLCBranch * a_pointer = &rlc;
-    Real * temp = (Real *)(a_pointer);
-    (*temp)++;
-    for(int i=0;i<10;i++){
-        a++;
+    std::vector<Real> data;
+    for(int i=0;i<int(1e6);i++){
+        data.emplace_back(sin(377.*i*1e-6));
+
     }
-    
-    printf("%f %d\n",temp[1] , b);
-    swap(a, b);
-    printf("%d %d\n", a, b);
-    printf("Hello World!\n");
+    plt::plot(data);
+    plt::show();
     return 0;
 }
