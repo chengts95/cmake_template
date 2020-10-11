@@ -10,6 +10,27 @@ void swap(int & a, int & b)
     a = temp;
 }
 
+template<int n,int lda>
+int dgetrs(Real * a, Real *b) {
+
+	
+	for (int i = 0; i < n; i++) {
+
+		int idx = IDX(i, 0, lda);
+		for (int k = 0; k < i; k++)
+			b[i] -= a[idx + k] * b[k];
+	}
+
+	for (int i = n - 1; i >= 0; i--) {
+		int idx = IDX(i, 0, lda);
+		for (int k = i + 1; k < n; k++)
+			b[i] -= a[idx + k] * b[k];
+
+		b[i] /= a[idx + i];
+	}
+	return 0;
+}
+
 int main(int argc, char const *argv[])
 {
     RLCBranch rlc;
