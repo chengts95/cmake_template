@@ -4,3 +4,6 @@
 [submodule "thirdparty/libflatarray"]
 	path = thirdparty/libflatarray
 	url = https://github.com/gentryx/libflatarray
+[submodule "thirdparty/Fastor"]
+	path = thirdparty/Fastor
+	url = https://github.com/romeric/Fastor
