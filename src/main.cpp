@@ -2,13 +2,6 @@
 #include <RLC.h>
 #include <matplotlib.hpp>
 namespace plt = matplotlibcpp;
-void swap(int &a, int &b)
-{
-    int temp;
-    temp = b;
-    b = a;
-    a = temp;
-}
 const int M = 2;
 #define IDX(i, j, lda) (i * lda + j)
 
@@ -59,28 +52,34 @@ int main(int argc, char const *argv[])
     const Real dt =1e-6;
     RLCBranch rlc;
     std::vector<Real> data;
-    Real R1 = 500, R2 = 10;
+    Real R1 = 1, R2 = 10;
     Real C2 = 1e-3;
     Real Geq = 2.0*C2/dt;
     Real Ieq = 0;
+
+    Real L2 = 1e-3;
+    Real Geql = dt/(2.*L2);
+    Real Ieql = 0;
     Real I2 = 1;
-    Real U1 = 1.0, Rs = 1e-6;
+    Real U1 = 100.0, Rs = 1e-6;
     Real I1 = U1 / Rs;
     std::vector<Real> u;
     G[IDX(0, 0, M)] += 1.0 / R1;
     G[IDX(1, 0, M)] -= 1.0 / R1;
     G[IDX(0, 1, M)] -= 1.0 / R1;
     G[IDX(0, 0, M)] += 1.0 / Rs;
-    G[IDX(1, 1, M)] +=  Geq;
+    G[IDX(1, 1, M)] +=  ((1/R2)+Geq+Geql);
     G[IDX(1, 1, M)] += 1.0 / R1;
     dgetrf<2,2>(G);
     for(int i=0;i<1000000;i++){
         b[0]=I1;
-        b[1]=-Ieq;
+        b[1]=-(Ieq+Ieql);
         dgetrs<2,2>(G,b);
         Real U = b[1];
         Real Ic = U*Geq+Ieq;
-        Ieq =-Geq-Ic;
+        Ieq =-Geq*U-Ic;
+        Real Il = U*Geql+Ieql;
+        Ieql =Geql*U+Il;
         u.emplace_back(U);
     }
  
